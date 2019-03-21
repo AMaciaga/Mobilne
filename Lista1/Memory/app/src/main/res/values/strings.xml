@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Memory</string>
+    <string name="memory">Memory</string>
+    <string name="empty"/>
+    <string name="start">Refresh</string>
+    <string name="points">Points:</string>
+</resources>
