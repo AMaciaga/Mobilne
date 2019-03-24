@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity"
+android:background="@color/backgrndTeal">
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteY="8dp" android:gravity="center">
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:src="@drawable/wisielec00"
+                android:id="@+id/imageView"
+                />
+        <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/textView" android:textAlignment="center"
+                android:textSize="30sp"
+                android:textStyle="bold" android:textColor="@android:color/black"/>
+        <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            <TableRow android:layout_width="wrap_content" android:layout_height="wrap_content">
+                <Button
+                        android:text="a"
+                        style="@style/button"
+                        android:id="@+id/a" android:layout_weight="1"
+                        android:onClick="onClick"/>
+                <Button
+                        android:text="b"
+                        style="@style/button"
+                        android:id="@+id/b" android:layout_weight="1"
+                        android:onClick="onClick"/>
+                <Button
+                        android:text="c"
+                        style="@style/button"
+                        android:id="@+id/c" android:layout_weight="1"
+                        android:onClick="onClick"/>
+                <Button
+                        android:text="d"
+                        style="@style/button"
+                        android:id="@+id/d" android:layout_weight="1"
+                        android:onClick="onClick"/>
+                <Button
+                        android:text="e"
+                        style="@style/button"
+                        android:id="@+id/e" android:layout_weight="1"
+                        android:onClick="onClick"/>
+                <Button
+                        android:text="f"
+                        style="@style/button"
+                        android:id="@+id/f" android:layout_weight="1"
+                        android:onClick="onClick"/>
+                <Button
+                        android:text="g"
+                        style="@style/button"
+                        android:id="@+id/g" android:layout_weight="1"
+                        android:onClick="onClick"/>
+                <Button
+                        android:text="h"
+                        style="@style/button"
+                        android:id="@+id/h" android:layout_weight="1"
+                        android:onClick="onClick"/>
+            </TableRow>
+            <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
+                <Button
+                        android:text="i"
+                        style="@style/button"
+                        android:id="@+id/i" android:layout_weight="1"
+                        android:onClick="onClick"/>
+                <Button
+                        android:text="j"
+                        style="@style/button"
+                        android:id="@+id/j" android:layout_weight="1"
+                        android:onClick="onClick"/>
+                <Button
+                        android:text="k"
+                        style="@style/button"
+                        android:id="@+id/k" android:layout_weight="1"
+                        android:onClick="onClick"/>
+                <Button
+                        android:text="l"
+                        style="@style/button"
+                        android:id="@+id/l" android:layout_weight="1"
+                        android:onClick="onClick"/>
+                <Button
+                        android:text="m"
+                        style="@style/button"
+                        android:id="@+id/m" android:layout_weight="1"
+                        android:onClick="onClick"/>
+                <Button
+                        android:text="n"
+                        style="@style/button"
+                        android:id="@+id/n" android:layout_weight="1"
+                        android:onClick="onClick"/>
+                <Button
+                        android:text="o"
+                        style="@style/button"
+                        android:id="@+id/o" android:layout_weight="1"
+                        android:onClick="onClick"/>
+                <Button
+                        android:text="p"
+                        style="@style/button"
+                        android:id="@+id/p" android:layout_weight="1"
+                        android:onClick="onClick"/>
+            </TableRow>
+            <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
+                <Button
+                        android:text="r"
+                        style="@style/button"
+                        android:id="@+id/r" android:layout_weight="1"
+                        android:onClick="onClick"/>
+                <Button
+                        android:text="s"
+                        style="@style/button"
+                        android:id="@+id/s" android:layout_weight="1"
+                        android:onClick="onClick"/>
+                <Button
+                        android:text="t"
+                        style="@style/button"
+                        android:id="@+id/t" android:layout_weight="1"
+                        android:onClick="onClick"/>
+                <Button
+                        android:text="u"
+                        style="@style/button"
+                        android:id="@+id/u" android:layout_weight="1"
+                        android:onClick="onClick"/>
+                <Button
+                        android:text="w"
+                        style="@style/button"
+                        android:id="@+id/w" android:layout_weight="1"
+                        android:onClick="onClick"/>
+                <Button
+                        android:text="y"
+                        style="@style/button"
+                        android:id="@+id/y" android:layout_weight="1"
+                        android:onClick="onClick"/>
+                <Button
+                        android:text="z"
+                        style="@style/button"
+                        android:id="@+id/z" android:layout_weight="1"
+                        android:onClick="onClick"/>
+            </TableRow>
+        </TableLayout>
+        <Button
+                android:text="Refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/refresh"
+                android:layout_gravity="center" android:onClick="refresh" android:textSize="18sp"
+                android:textStyle="bold" android:textColor="@android:color/black"/>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
