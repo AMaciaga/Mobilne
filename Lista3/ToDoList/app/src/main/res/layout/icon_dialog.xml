@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             android:background="@color/colorAccent">
+
+    <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:gravity="center"
+    android:padding="8dp">
+
+        <TableRow android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center">
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:srcCompat="@drawable/home" android:id="@+id/homeIcon"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    style="@style/imgButton"
+            />
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:srcCompat="@drawable/work" android:id="@+id/workIcon"
+                    app:layout_constraintStart_toEndOf="@+id/homeIcon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/homeIcon"
+                    style="@style/imgButton"/>
+        </TableRow>
+        <TableRow android:layout_width="wrap_content" android:layout_height="match_parent" android:gravity="center">
+            <TextView
+                    android:text="dom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/textView" android:textAlignment="center"/>
+            <TextView
+                    android:text="praca"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/textView2" android:textAlignment="center"/>
+        </TableRow>
+        <TableRow android:layout_width="wrap_content" android:layout_height="match_parent" android:gravity="center">
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:srcCompat="@drawable/shop" android:id="@+id/shopIcon"
+                    app:layout_constraintEnd_toEndOf="@+id/homeIcon"
+                    app:layout_constraintStart_toStartOf="@+id/homeIcon"
+                    app:layout_constraintTop_toBottomOf="@+id/homeIcon"
+                    style="@style/imgButton"/>
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:srcCompat="@drawable/social"
+                    android:id="@+id/socialIcon"
+                    app:layout_constraintTop_toBottomOf="@+id/workIcon"
+                    app:layout_constraintEnd_toEndOf="@+id/workIcon"
+                    app:layout_constraintStart_toStartOf="@+id/workIcon"
+                    style="@style/imgButton"/>
+        </TableRow>
+        <TableRow android:layout_width="wrap_content" android:layout_height="match_parent" android:gravity="center">
+            <TextView
+                    android:text="zakupy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/textView3" android:textAlignment="center"/>
+            <TextView
+                    android:text="spotkania"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/textView4" android:textAlignment="center"/>
+        </TableRow>
+    </TableLayout>
+</android.support.constraint.ConstraintLayout>

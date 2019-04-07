@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">ToDoList</string>
+    <string-array name="priorities">
+        <item>Niski</item>
+        <item>Średni</item>
+        <item>Wysoki</item>
+        <item>Bardzo Wysoki</item>
+    </string-array>
+    <string-array name="sortTypes">
+        <item>data rosnąco</item>
+        <item>data malejąco</item>
+        <item>priorytet rosnąco</item>
+        <item>priorytet malejąco</item>
+        <item>ikona</item>
+    </string-array>
+</resources>
