@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Gallery</string>
+    <string name="sortuj_rosnaco">Sortuj Rosnąco</string>
+    <string name="sortuj_malejaco">Sortuj Malejąco</string>
+    <string-array name="pictures">
+        <item>mon1</item>
+        <item>mon2</item>
+        <item>mon3</item>
+        <item>mon4</item>
+        <item>mon5</item>
+        <item>mon6</item>
+    </string-array>
+</resources>
