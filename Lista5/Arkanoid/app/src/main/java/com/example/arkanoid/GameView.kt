@@ -1,7 +1,7 @@
 package com.example.arkanoid
 
-import android.app.Activity
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
@@ -9,12 +9,18 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class GameView(context: Context, attributeSet: AttributeSet)
     : SurfaceView(context, attributeSet), SurfaceHolder.Callback {
 
     private val thread : GameThread
+
+    private var PREFS_NAME = "arkanoid"
+    lateinit var sharedPref : SharedPreferences
 
     var myActivity : MainActivity? = null
     private var ball = Ball(0f,0f)
@@ -44,11 +50,34 @@ class GameView(context: Context, attributeSet: AttributeSet)
         paddle.y = height - 4*paddle.height
         ball.x = width  / 2f
         ball.y = paddle.y -paddle.height- ball.radius
-        generateBricks()
+        sharedPref = myActivity?.getSharedPreferences( PREFS_NAME, Context.MODE_PRIVATE)!!
+        var bricksJson = sharedPref.getString("bricks", null)
+
+
+        var bricksJsonArray = bricksJson.removePrefix("[").removeSuffix("]").split("}")
+        for (b in bricksJsonArray){
+            var b1 = b.removePrefix(",") + "}"
+            if(b1.startsWith("{") && b1.endsWith("}")){
+                var gson = Gson()
+                var brick = gson.fromJson(b1.trim(),Brick::class.java)
+                bricks.add(brick)
+            }
+
+        }
+        println(bricks)
+
+        if(bricks.isEmpty()){
+            generateBricks()
+        }
+
         thread.setRunning(true)
         thread.start()
     }
 
+    fun start(a: MainActivity){
+        myActivity = a
+
+    }
     fun generateBricks(){
         val rows = 6
         val cols = 6
@@ -85,12 +114,14 @@ class GameView(context: Context, attributeSet: AttributeSet)
         checkCollision()
         checkWin()
 
+
+
     }
     private fun checkWin(){
+
         if(bricks.isEmpty()){
             ball.dx = 0f
             ball.dy = 0f
-
         }
     }
     private fun checkCollision(){
@@ -203,6 +234,16 @@ class GameView(context: Context, attributeSet: AttributeSet)
                         ball.dy *= -1
                     }
                 }
+                var gson = Gson()
+                var jsonString = gson.toJson(bricks)
+//                println(bricks)
+                println(jsonString)
+
+                sharedPref = myActivity?.getSharedPreferences( PREFS_NAME, Context.MODE_PRIVATE)!!
+                val editor : SharedPreferences.Editor = sharedPref.edit()
+                editor.putString("bricks", jsonString)
+                editor!!.commit()
+
 
                 return
             }

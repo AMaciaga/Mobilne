@@ -29,6 +29,7 @@ class GameThread(private val surfaceHolder: SurfaceHolder,
                 synchronized(surfaceHolder) {
                     gameView.update()
                     gameView.draw(canvas!!)
+
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
