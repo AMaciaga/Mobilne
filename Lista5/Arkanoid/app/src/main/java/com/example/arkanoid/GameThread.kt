@@ -14,6 +14,7 @@ class GameThread(private val surfaceHolder: SurfaceHolder,
         this.running = isRunning
     }
 
+
     override fun run() {
         var startTime : Long
         var timeMillis : Long

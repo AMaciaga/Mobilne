@@ -27,6 +27,10 @@ class GameView(context: Context, attributeSet: AttributeSet)
     private var paddle = Paddle(0f,0f)
     private var ballLaunched = false
     private var bricks :ArrayList<Brick> = ArrayList()
+    private var points = 0
+    private var lives = 3
+    private var highScore = 0
+    private var gameEnded = false
 
 
 
@@ -53,31 +57,34 @@ class GameView(context: Context, attributeSet: AttributeSet)
         sharedPref = myActivity?.getSharedPreferences( PREFS_NAME, Context.MODE_PRIVATE)!!
         var bricksJson = sharedPref.getString("bricks", null)
 
+        if(bricksJson != null){
+            var bricksJsonArray = bricksJson.removePrefix("[").removeSuffix("]").split("}")
+            for (b in bricksJsonArray){
+                var b1 = b.removePrefix(",") + "}"
+                if(b1.startsWith("{") && b1.endsWith("}")){
+                    var gson = Gson()
+                    var brick = gson.fromJson(b1.trim(),Brick::class.java)
+                    bricks.add(brick)
+                }
 
-        var bricksJsonArray = bricksJson.removePrefix("[").removeSuffix("]").split("}")
-        for (b in bricksJsonArray){
-            var b1 = b.removePrefix(",") + "}"
-            if(b1.startsWith("{") && b1.endsWith("}")){
-                var gson = Gson()
-                var brick = gson.fromJson(b1.trim(),Brick::class.java)
-                bricks.add(brick)
             }
-
         }
-        println(bricks)
-
-        if(bricks.isEmpty()){
+        else{
             generateBricks()
         }
+        points = sharedPref.getInt("points",0)
+        highScore = sharedPref.getInt("highScore",0)
+        lives = sharedPref.getInt("lives",3)
 
+
+        saveToPrefs()
+        postLives(lives.toString())
+        postPoints(points.toString())
+        postHighScore(highScore.toString())
         thread.setRunning(true)
         thread.start()
     }
 
-    fun start(a: MainActivity){
-        myActivity = a
-
-    }
     fun generateBricks(){
         val rows = 6
         val cols = 6
@@ -92,6 +99,25 @@ class GameView(context: Context, attributeSet: AttributeSet)
                 x += ((2*brick.width) + space)
             }
         }
+    }
+    fun fullReset(){
+        gameEnded = false
+        paddle.x = width  / 2f
+        paddle.y = height - 4*paddle.height
+        ball.x = width  / 2f
+        ball.y = paddle.y -paddle.height- ball.radius
+        ballLaunched = false
+        points = 0
+        postPoints(points.toString())
+        lives = 3
+        postLives(lives.toString())
+        bricks = ArrayList()
+        generateBricks()
+        saveToPrefs()
+        postLives(lives.toString())
+        postPoints(points.toString())
+        postHighScore(highScore.toString())
+        hideWinOrLose()
     }
     fun update() {
 
@@ -122,6 +148,8 @@ class GameView(context: Context, attributeSet: AttributeSet)
         if(bricks.isEmpty()){
             ball.dx = 0f
             ball.dy = 0f
+            postWinOrLose("You Win :)")
+            gameEnded = true
         }
     }
     private fun checkCollision(){
@@ -133,6 +161,12 @@ class GameView(context: Context, attributeSet: AttributeSet)
         }
         if( ball.y+ball.radius >= height) {
             reset()
+            lives--
+            postLives(lives.toString())
+            if(lives <= 0){
+                postWinOrLose("You Lost :(")
+                gameEnded = true
+            }
             return
         }
 
@@ -234,15 +268,15 @@ class GameView(context: Context, attributeSet: AttributeSet)
                         ball.dy *= -1
                     }
                 }
-                var gson = Gson()
-                var jsonString = gson.toJson(bricks)
-//                println(bricks)
-                println(jsonString)
 
-                sharedPref = myActivity?.getSharedPreferences( PREFS_NAME, Context.MODE_PRIVATE)!!
-                val editor : SharedPreferences.Editor = sharedPref.edit()
-                editor.putString("bricks", jsonString)
-                editor!!.commit()
+                points+= 10
+                postPoints(points.toString())
+                if(points > highScore){
+                    highScore = points
+                    postHighScore(highScore.toString())
+                }
+
+                saveToPrefs()
 
 
                 return
@@ -250,6 +284,34 @@ class GameView(context: Context, attributeSet: AttributeSet)
         }
 
     }
+
+
+    private fun postPoints(msg :String){
+        myActivity?.runOnUiThread{
+            myActivity?.displayPoints(msg)
+        }
+    }
+    private fun postHighScore(msg : String){
+        myActivity?.runOnUiThread{
+            myActivity?.displayHighScore(msg)
+        }
+    }
+    private fun postLives(msg : String){
+        myActivity?.runOnUiThread{
+            myActivity?.displayLives(msg)
+        }
+    }
+    private fun postWinOrLose(msg : String){
+        myActivity?.runOnUiThread{
+            myActivity?.displayWinOrLose(msg)
+        }
+    }
+    private fun hideWinOrLose(){
+        myActivity?.runOnUiThread{
+            myActivity?.hideWinOrLose()
+        }
+    }
+
     private fun reset(){
         ballLaunched = false
         ball.dx = 0f
@@ -278,31 +340,46 @@ class GameView(context: Context, attributeSet: AttributeSet)
         }
 
     }
+    private fun saveToPrefs(){
+        val gson = Gson()
+        val jsonString = gson.toJson(bricks)
+
+        sharedPref = myActivity?.getSharedPreferences( PREFS_NAME, Context.MODE_PRIVATE)!!
+        val editor : SharedPreferences.Editor = sharedPref.edit()
+        editor.putString("bricks", jsonString)
+        editor.putInt("points", points)
+        editor.putInt("highScore", highScore)
+        editor.putInt("lives", lives)
+        editor!!.commit()
+    }
+
 
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        if(!gameEnded){
+            if(!ballLaunched && event.y < height/2){
 
-        if(!ballLaunched && event.y < height/2){
-
-            ballLaunched = !ballLaunched
-            ball.dx = (if (Math.random() <= 0.5) -1 else 1) * ball.radius
-            ball.dy = -1 * ball.radius
-        }
+                ballLaunched = !ballLaunched
+                ball.dx = (if (Math.random() <= 0.5) -1 else 1) * ball.radius
+                ball.dy = -1 * ball.radius
+            }
 
 
-        if(event.action == MotionEvent.ACTION_DOWN){
-            if(event.y >= height/2){
-                if(event.x >= width/2 ){
-                    paddle.dx = paddle.speed
-                }
-                else{
-                    paddle.dx = -paddle.speed
+            if(event.action == MotionEvent.ACTION_DOWN){
+                if(event.y >= height/2){
+                    if(event.x >= width/2 ){
+                        paddle.dx = paddle.speed
+                    }
+                    else{
+                        paddle.dx = -paddle.speed
+                    }
                 }
             }
+            if(event.action == MotionEvent.ACTION_UP){
+                paddle.dx = 0f
+            }
         }
-        if(event.action == MotionEvent.ACTION_UP){
-            paddle.dx = 0f
-        }
+
 
 
 
