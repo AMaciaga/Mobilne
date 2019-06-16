@@ -4,20 +4,18 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import android.icu.util.Calendar
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatActivity
+import android.view.LayoutInflater
 import android.view.View
 import kotlinx.android.synthetic.main.activity_edit_task.*
-import android.content.DialogInterface
-import android.icu.util.Calendar
-import android.support.v7.app.AlertDialog
-import android.view.LayoutInflater
 import kotlinx.android.synthetic.main.custom_title.view.*
 import kotlinx.android.synthetic.main.icon_dialog.view.*
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
-import javax.xml.datatype.DatatypeConstants.MONTHS
 
 
 class EditTask : AppCompatActivity() {
